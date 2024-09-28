@@ -31,6 +31,7 @@ iris_test_category <- iris[-subset,5]
 summary(iris_test_category)
 summary(iris_target_category)
 
+
 ```
 
 #
@@ -51,7 +52,7 @@ tab
 Discuss your results.  If you have done this correctly, you should have a classification error rate that is roughly 20% higher than what we observed in class.  Why is this the case? In particular run a summary of the `iris_test_category` as well as `iris_target_category` and discuss how this plays a role in your answer.  
 
 *STUDENT INPUT* 
-There is a high classification error rate because the training data is not an accurate reflection of the test data. In the iris_target_category, there is a high amount of virginica while a low amount of versicolor data points. On the other hand, in the iris_test_category,there is a high amount of versicolor and a low amount of virginica data points. This difference in data points causes there to be algorithmical bias, resulting in the classification error.
+There is a high classification error rate because the training data is not an accurate reflection of the test data.Looking at the two summaries, in the iris_target_category, there is a high amount of virginica while a low amount of versicolor data points. On the other hand, in the iris_test_category,there is a high amount of versicolor and a low amount of virginica data points. This difference in data points causes there to be algorithmical bias, resulting in the classification error in the test category.
 
 
 #
@@ -60,7 +61,6 @@ Choice of $K$ can also influence this classifier.  Why would choosing $K = 6$ no
 *STUDENT INPUT*
 Choosing 6 is not advisable because it is a multiple of 3, as well as an even number. This means that there is a chance for two or three categories to have the same amount of neigbhors to a point, causing tie breaking issues and classification errors.
 
-*STUDENT INPUT*
 
 #
 
