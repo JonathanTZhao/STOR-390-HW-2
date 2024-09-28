@@ -362,6 +362,30 @@ algorithms as well as their potential pitfalls. In class, we
 demonstrated K-Nearest-Neighbors using the <code>iris</code> dataset.
 Today I will give you a different subset of this same data, and you will
 train a KNN classifier.</p>
+<pre class="r"><code>set.seed(123)
+library(class)
+
+df &lt;- data(iris) 
+
+normal &lt;-function(x) {
+  (x -min(x))/(max(x)-min(x))   
+}
+
+iris_norm &lt;- as.data.frame(lapply(iris[,c(1,2,3,4)], normal))
+
+subset &lt;- c(1:45, 58, 60:70, 82, 94, 110:150)
+iris_train &lt;- iris_norm[subset,] 
+iris_test &lt;- iris_norm[-subset,] 
+
+iris_target_category &lt;- iris[subset,5]
+iris_test_category &lt;- iris[-subset,5]
+
+summary(iris_test_category)</code></pre>
+<pre><code>##     setosa versicolor  virginica 
+##          5         36          9</code></pre>
+<pre class="r"><code>summary(iris_target_category)</code></pre>
+<pre><code>##     setosa versicolor  virginica 
+##         45         14         41</code></pre>
 <div id="section" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> </h1>
 <p>Above, I have given you a training-testing partition. Train the KNN
@@ -370,7 +394,16 @@ use this to classify the 50 test observations. Once you have classified
 the test observations, create a contingency table – like we did in class
 – to evaluate which observations your algorithm is misclassifying.</p>
 <pre class="r"><code>set.seed(123)
-#STUDENT INPUT</code></pre>
+#STUDENT INPUT
+
+pr &lt;- knn(iris_train, iris_test, cl = iris_target_category, k = 5)
+tab &lt;- table(pr, iris_test_category)
+tab</code></pre>
+<pre><code>##             iris_test_category
+## pr           setosa versicolor virginica
+##   setosa          5          0         0
+##   versicolor      0         25         0
+##   virginica       0         11         9</code></pre>
 </div>
 <div id="section-1" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> </h1>
@@ -380,20 +413,30 @@ observed in class. Why is this the case? In particular run a summary of
 the <code>iris_test_category</code> as well as
 <code>iris_target_category</code> and discuss how this plays a role in
 your answer.</p>
-<p><em>STUDENT INPUT</em></p>
+<p><em>STUDENT INPUT</em> There is a high classification error rate
+because the training data is not an accurate reflection of the test
+data.Looking at the two summaries, in the iris_target_category, there is
+a high amount of virginica while a low amount of versicolor data points.
+On the other hand, in the iris_test_category,there is a high amount of
+versicolor and a low amount of virginica data points. This difference in
+data points causes there to be algorithmical bias, resulting in the
+classification error in the test category.</p>
 </div>
 <div id="section-2" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> </h1>
 <p>Choice of <span class="math inline">\(K\)</span> can also influence
 this classifier. Why would choosing <span class="math inline">\(K =
-6\)</span> not be advisable for this data?</p>
-<p><em>STUDENT INPUT</em></p>
+6\)</span> not be advisable for this data? <em>STUDENT INPUT</em>
+Choosing 6 is not advisable because it is a multiple of 3, as well as an
+even number. This means that there is a chance for two or three
+categories to have the same amount of neigbhors to a point, causing tie
+breaking issues and classification errors.</p>
 </div>
 <div id="section-3" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> </h1>
 <p>Build a github repository to store your homework assignments. Share
 the link in this file.</p>
-<p><em>STUDENT INPUT</em></p>
+<p><em>STUDENT INPUT</em> <a href="https://github.com/JonathanTZhao/STOR-390-HW-2" class="uri">https://github.com/JonathanTZhao/STOR-390-HW-2</a></p>
 </div>
 
 
